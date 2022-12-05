@@ -3,35 +3,34 @@
 
 #include "../include/AxisAlignedBoundingBox.h"
 #include "../include/QuadTree.h"
+#include "../include/QuadTreeRenderer.h"
+
+#define HEIGHT 500
+#define WIDTH 500
+#define GENERATE_POINTS 1000
 
 int main() {
+    // Create a new render window
+    QuadTreeRenderer window(HEIGHT, WIDTH);
+
     // Create a new AABB tree with a capacity of 4
-    QuadTree<int> root_tree(AxisAlignedBoundingBox(0, 0, 100, 100), 4);
+    QuadTree<int> root_tree(AxisAlignedBoundingBox(2, 2, HEIGHT - 4, WIDTH - 4), 1);
 
     // Insert some AABBs
-    root_tree.insert(AxisAlignedBoundingBox(0, 0, 10, 10), 1);
-    root_tree.insert(AxisAlignedBoundingBox(10, 10, 10, 10), 2);
-    root_tree.insert(AxisAlignedBoundingBox(20, 20, 10, 10), 3);
-    root_tree.insert(AxisAlignedBoundingBox(30, 30, 10, 10), 4);
-    root_tree.insert(AxisAlignedBoundingBox(40, 40, 10, 10), 5);
-    root_tree.insert(AxisAlignedBoundingBox(50, 50, 10, 10), 6);
+    root_tree.insert(AxisAlignedBoundingBox(10, 10, 10, 10), 1);
+    root_tree.insert(AxisAlignedBoundingBox(20, 20, 10, 10), 2);
+    root_tree.insert(AxisAlignedBoundingBox(30, 30, 10, 10), 3);
+    root_tree.insert(AxisAlignedBoundingBox(40, 40, 10, 10), 4);
 
-    // Start a chrono timer
-    auto start = std::chrono::high_resolution_clock::now();
+    // Print amount of AABBs
+    std::cout << "Amount of AABBs: " << root_tree.get_as_vector().size() << std::endl;
 
-    // Query the tree for AABBs that intersect with a given AABB
-    std::unordered_set<int> results = root_tree.query(AxisAlignedBoundingBox(0, 0, 100, 100));
+    // Draw the root tree
+    window.drawTree(&root_tree);
 
-    // Stop the chrono timer
-    auto stop = std::chrono::high_resolution_clock::now();
-
-    // Print the results
-    for (int result : results) {
-        std::cout << result << std::endl;
+    SDL_Event event;
+    while (event.type != SDL_QUIT){
+        SDL_Delay(10);  // setting some Delay
+        SDL_PollEvent(&event);  // Catching the poll event.
     }
-
-    // Print the time it took to query the tree
-    std::cout << "Time taken: " << std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() << " microseconds" << std::endl;
-
-    return 0;
 }

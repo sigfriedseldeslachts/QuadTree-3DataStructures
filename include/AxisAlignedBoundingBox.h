@@ -21,10 +21,10 @@ class AxisAlignedBoundingBox {
          */
         friend bool collides(const AxisAlignedBoundingBox &a, const AxisAlignedBoundingBox &b);
 
-        unsigned int getX() const;
-        unsigned int getY() const;
-        unsigned int getWidth() const;
-        unsigned int getHeight() const;
+        [[nodiscard]] unsigned int getX() const;
+        [[nodiscard]] unsigned int getY() const;
+        [[nodiscard]] unsigned int getWidth() const;
+        [[nodiscard]] unsigned int getHeight() const;
 };
 
 

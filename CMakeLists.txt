@@ -3,7 +3,7 @@ project(Project_QuadTree)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Project_QuadTree src/main.cpp src/AxisAlignedBoundingBox.cpp include/AxisAlignedBoundingBox.h src/QuadTree.cpp include/QuadTree.h src/Window.cpp include/Window.h)
+add_executable(Project_QuadTree src/main.cpp src/AxisAlignedBoundingBox.cpp include/AxisAlignedBoundingBox.h src/QuadTree.cpp include/QuadTree.h src/QuadTreeRenderer.cpp include/QuadTreeRenderer.h include/QuadTreeIterator.h)
 
 # Include SDL2
 INCLUDE(FindPkgConfig)

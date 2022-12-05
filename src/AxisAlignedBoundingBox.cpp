@@ -1,3 +1,4 @@
+#include <utility>
 #include "../include/AxisAlignedBoundingBox.h"
 
 AxisAlignedBoundingBox::AxisAlignedBoundingBox(unsigned int x, unsigned int y, unsigned int width, unsigned int height) {
@@ -8,6 +9,9 @@ AxisAlignedBoundingBox::AxisAlignedBoundingBox(unsigned int x, unsigned int y, u
 }
 
 bool collides(const AxisAlignedBoundingBox &a, const AxisAlignedBoundingBox &b) {
+    // Check if B collides with A, the top left corner is 0,0
+    // A is the bounding box of the object
+    // B is the bounding box of the node
     return a.x < b.x + b.width &&
            a.x + a.width > b.x &&
            a.y < b.y + b.height &&
