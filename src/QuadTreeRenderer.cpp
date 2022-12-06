@@ -25,19 +25,20 @@ void QuadTreeRenderer::update() {
 }
 
 void QuadTreeRenderer::drawTree(QuadTree<int> *tree) {
-    // First we should draw all the (sub)tree bounding boxes
-
     for (QuadTreeIterator<int> it = tree->begin(); it != tree->end(); ++it)
     {
         std::vector<std::pair<AxisAlignedBoundingBox, int>> points = *it;
         for (auto point : points)
         {
+            // Draws the bounding box of the points
             drawSquareContour(point.first, 255, 255, 255, 255);
         }
 
-        drawSquareContour(it.tree().getBounds(), 0, 255, 0, 255);
+        // Prints the amount of points in the current node
+        std::cout << "Amount of points in current node: " << points.size() << std::endl;
 
-        std::cout << points.size() << std::endl;
+        // This draws the bounding box of the current tree
+        drawSquareContour(it.tree().getBounds(), 0, 255, 0, 255);
     }
 
     SDL_RenderPresent(renderer);

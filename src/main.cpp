@@ -5,9 +5,9 @@
 #include "../include/QuadTree.h"
 #include "../include/QuadTreeRenderer.h"
 
-#define HEIGHT 500
-#define WIDTH 500
-#define GENERATE_POINTS 1000
+#define HEIGHT 800
+#define WIDTH 800
+#define GENERATE_POINTS 20
 
 int main() {
     // Create a new render window
@@ -16,11 +16,10 @@ int main() {
     // Create a new AABB tree with a capacity of 4
     QuadTree<int> root_tree(AxisAlignedBoundingBox(2, 2, HEIGHT - 4, WIDTH - 4), 1);
 
-    // Insert some AABBs
-    root_tree.insert(AxisAlignedBoundingBox(10, 10, 10, 10), 1);
-    root_tree.insert(AxisAlignedBoundingBox(20, 20, 10, 10), 2);
-    root_tree.insert(AxisAlignedBoundingBox(30, 30, 10, 10), 3);
-    root_tree.insert(AxisAlignedBoundingBox(40, 40, 10, 10), 4);
+    root_tree.insert(AxisAlignedBoundingBox(5, 10, 2, 2), 1);
+    root_tree.insert(AxisAlignedBoundingBox(15, 10, 2, 2), 2);
+    root_tree.insert(AxisAlignedBoundingBox(10, 5, 2, 2), 3);
+    root_tree.insert(AxisAlignedBoundingBox(10, 15, 2, 2), 4);
 
     // Print amount of AABBs
     std::cout << "Amount of AABBs: " << root_tree.get_as_vector().size() << std::endl;
