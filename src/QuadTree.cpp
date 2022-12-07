@@ -3,15 +3,12 @@
 #include "../include/QuadTreeIterator.h"
 
 template<typename T>
-void QuadTree<T>::insert(const AxisAlignedBoundingBox &bounds, const T &metadata, QuadTree<T> *parent_node) {
+void QuadTree<T>::insert(const AxisAlignedBoundingBox &bounds, const T &metadata) {
     // We should check if the given bounds collides with the bounds of this node
     // If it does, continue on otherwise we stop here because subregions will also not collide
     if (!collides(this->bounds, bounds)) {
         return;
     }
-
-    // Set parent node
-    this->parent = parent_node;
 
     // If there is space in the current tree, we can just insert the AABB
     if (this->points.size() < this->region_capacity && this->north_west == nullptr) {
@@ -27,10 +24,10 @@ void QuadTree<T>::insert(const AxisAlignedBoundingBox &bounds, const T &metadata
     }
 
     // Insert the AABB into the correct subtree
-    this->north_west->insert(bounds, metadata, this);
-    this->north_east->insert(bounds, metadata, this);
-    this->south_west->insert(bounds, metadata, this);
-    this->south_east->insert(bounds, metadata, this);
+    this->north_west->insert(bounds, metadata);
+    this->north_east->insert(bounds, metadata);
+    this->south_west->insert(bounds, metadata);
+    this->south_east->insert(bounds, metadata);
 }
 
 template<typename T>
@@ -43,10 +40,10 @@ void QuadTree<T>::subdivide() {
     unsigned int x = this->bounds.getX(), y = this->bounds.getY(),
                  width = this->bounds.getWidth(), height = this->bounds.getHeight();
 
-    this->north_west = new QuadTree<T>(AxisAlignedBoundingBox(x, y, width / 2, height / 2), this->region_capacity);
-    this->north_east = new QuadTree<T>(AxisAlignedBoundingBox(x + (width / 2), y, width / 2, height / 2), this->region_capacity);
-    this->south_west = new QuadTree<T>(AxisAlignedBoundingBox(x, y + (height / 2), width / 2, height / 2), this->region_capacity);
-    this->south_east = new QuadTree<T>(AxisAlignedBoundingBox(x + (width / 2), y + (height / 2), width / 2, height / 2), this->region_capacity);
+    this->north_west = new QuadTree<T>(AxisAlignedBoundingBox(x, y, width / 2, height / 2), this->region_capacity, this);
+    this->north_east = new QuadTree<T>(AxisAlignedBoundingBox(x + (width / 2), y, width / 2, height / 2), this->region_capacity, this);
+    this->south_west = new QuadTree<T>(AxisAlignedBoundingBox(x, y + (height / 2), width / 2, height / 2), this->region_capacity, this);
+    this->south_east = new QuadTree<T>(AxisAlignedBoundingBox(x + (width / 2), y + (height / 2), width / 2, height / 2), this->region_capacity, this);
 }
 
 template<typename T>

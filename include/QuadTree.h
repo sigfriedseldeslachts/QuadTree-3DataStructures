@@ -15,6 +15,8 @@ class QuadTree {
         unsigned int region_capacity = 0;
         std::vector<std::pair<AxisAlignedBoundingBox, T>> points;
 
+        //QuadTree<T>* children[4];
+
         QuadTree* parent = nullptr;
         QuadTree* north_west = nullptr; // AKA: Top-Left
         QuadTree* north_east = nullptr; // AKA: Top-Right
@@ -22,9 +24,9 @@ class QuadTree {
         QuadTree* south_east = nullptr; // AKA: Bottom-Right
 
     public:
-        QuadTree(const AxisAlignedBoundingBox& bounds, unsigned int region_capacity) : bounds(bounds), region_capacity(region_capacity) {}
+        QuadTree(const AxisAlignedBoundingBox& bounds, unsigned int region_capacity, QuadTree* parent = nullptr) : bounds(bounds), region_capacity(region_capacity), parent(parent) {}
 
-        void insert(const AxisAlignedBoundingBox& bounds, const T& metadata, QuadTree* parent = nullptr);
+        void insert(const AxisAlignedBoundingBox& bounds, const T& metadata);
         void subdivide();
         std::unordered_set<T> query(const AxisAlignedBoundingBox& bounds);
 

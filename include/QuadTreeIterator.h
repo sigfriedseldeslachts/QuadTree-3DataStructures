@@ -9,54 +9,46 @@ class QuadTreeIterator {
 
         std::vector<std::pair<AxisAlignedBoundingBox, T>> operator*() const { return current->getPoints(); }
 
-        QuadTreeIterator<T>& operator++() {
+        const QuadTreeIterator<T>& operator++() {
             if (current->getNorthWest() != nullptr) {
                 current = current->getNorthWest();
-                return *this;
-            }
-
-            // If we have a north-east child, move to it.
-            if (current->getNorthEast() != nullptr) {
+            } else if (current->getNorthEast() != nullptr) {
                 current = current->getNorthEast();
-                return *this;
-            }
-
-            // If we have a south-west child, move to it.
-            if (current->getSouthWest() != nullptr) {
+            } else if (current->getSouthWest() != nullptr) {
                 current = current->getSouthWest();
-                return *this;
-            }
-
-            // If we have a south-east child, move to it.
-            if (current->getSouthEast() != nullptr) {
+            } else if (current->getSouthEast() != nullptr) {
                 current = current->getSouthEast();
-                return *this;
+            } else {
+                QuadTree<T>* parent = current->getParent();
+
+                while (parent != nullptr) {
+                    // Check if we are north west child
+                    bool is_north_west = parent->getNorthWest() == current;
+                    bool is_north_east = parent->getNorthEast() == current;
+                    bool is_south_west = parent->getSouthWest() == current;
+                    bool is_south_east = parent->getSouthEast() == current;
+
+                    if (parent->getNorthWest() != nullptr && !is_north_west && !is_north_east && !is_south_west && !is_south_east) {
+                        current = parent->getNorthWest();
+                        return *this;
+                    } else if (parent->getNorthEast() != nullptr && !is_north_east && !is_south_west && !is_south_east) {
+                        current = parent->getNorthEast();
+                        return *this;
+                    } else if (parent->getSouthWest() != nullptr && !is_south_west && !is_south_east) {
+                        current = parent->getSouthWest();
+                        return *this;
+                    } else if (parent->getSouthEast() != nullptr && !is_south_east) {
+                        current = parent->getSouthEast();
+                        return *this;
+                    }
+
+                    current = parent;
+                    parent = parent->getParent();
+                }
+
+                current = nullptr;
             }
 
-            // If we have a parent, move to the next sibling of the parent.
-            while (current->getParent() != nullptr) {
-                current = current->getParent();
-
-                if (current->getNorthWest() != nullptr) {
-                    current = current->getNorthWest();
-                    return *this;
-                }
-                if (current->getNorthEast() != nullptr) {
-                    current = current->getNorthEast();
-                    return *this;
-                }
-                if (current->getSouthWest() != nullptr) {
-                    current = current->getSouthWest();
-                    return *this;
-                }
-                if (current->getSouthEast() != nullptr) {
-                    current = current->getSouthEast();
-                    return *this;
-                }
-            }
-
-            // If we have no parent (i.e. we are at the root node), set the current node to nullptr.
-            current = nullptr;
             return *this;
         }
 
