@@ -19,6 +19,7 @@ int main() {
     root_tree.insert(AxisAlignedBoundingBox(100, 100, 100, 100), 1);
     root_tree.insert(AxisAlignedBoundingBox(200, 200, 100, 100), 2);
     root_tree.insert(AxisAlignedBoundingBox(700, 700, 100, 100), 3);
+    root_tree.insert(AxisAlignedBoundingBox(300, 300, 100, 100), 4);
 
     // Insert in the south-west region
     root_tree.insert(AxisAlignedBoundingBox(600, 600, 20, 20), 5);

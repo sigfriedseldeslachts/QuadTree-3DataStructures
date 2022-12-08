@@ -11,7 +11,7 @@ void QuadTree<T>::insert(const AxisAlignedBoundingBox &bounds, const T &metadata
     }
 
     // If there is space in the current tree, we can just insert the AABB
-    if (this->points.size() < this->region_capacity && this->north_west == nullptr) {
+    if (this->points.size() < this->region_capacity && this->children[0] == nullptr) {
         // Print the metadata
         std::cout << "Inserting " << (int) metadata << std::endl;
         this->points.push_back(std::make_pair(bounds, metadata));
@@ -19,31 +19,30 @@ void QuadTree<T>::insert(const AxisAlignedBoundingBox &bounds, const T &metadata
     }
 
     // Check if we have not yet subdivided the current tree
-    if (this->north_west == nullptr) {
+    if (this->children[0] == nullptr) {
         this->subdivide();
     }
 
-    // Insert the AABB into the correct subtree
-    this->north_west->insert(bounds, metadata);
-    this->north_east->insert(bounds, metadata);
-    this->south_west->insert(bounds, metadata);
-    this->south_east->insert(bounds, metadata);
+    // For all the children, we should insert the AABB
+    for (QuadTree<T>* child : this->children) {
+        child->insert(bounds, metadata);
+    }
 }
 
 template<typename T>
 void QuadTree<T>::subdivide() {
     // First check if we have already subdivided
-    if (this->north_west != nullptr) {
+    if (this->children[0] != nullptr) {
         return;
     }
 
     unsigned int x = this->bounds.getX(), y = this->bounds.getY(),
                  width = this->bounds.getWidth(), height = this->bounds.getHeight();
 
-    this->north_west = new QuadTree<T>(AxisAlignedBoundingBox(x, y, width / 2, height / 2), this->region_capacity, this);
-    this->north_east = new QuadTree<T>(AxisAlignedBoundingBox(x + (width / 2), y, width / 2, height / 2), this->region_capacity, this);
-    this->south_west = new QuadTree<T>(AxisAlignedBoundingBox(x, y + (height / 2), width / 2, height / 2), this->region_capacity, this);
-    this->south_east = new QuadTree<T>(AxisAlignedBoundingBox(x + (width / 2), y + (height / 2), width / 2, height / 2), this->region_capacity, this);
+    this->children[0] = new QuadTree<T>(AxisAlignedBoundingBox(x, y, width / 2, height / 2), this->region_capacity, this);
+    this->children[1] = new QuadTree<T>(AxisAlignedBoundingBox(x + (width / 2), y, width / 2, height / 2), this->region_capacity, this);
+    this->children[2] = new QuadTree<T>(AxisAlignedBoundingBox(x, y + (height / 2), width / 2, height / 2), this->region_capacity, this);
+    this->children[3] = new QuadTree<T>(AxisAlignedBoundingBox(x + (width / 2), y + (height / 2), width / 2, height / 2), this->region_capacity, this);
 }
 
 template<typename T>
@@ -64,21 +63,15 @@ std::unordered_set<T> QuadTree<T>::query(const AxisAlignedBoundingBox &bounds) {
     }
 
     // Check if we have subtrees, if not, return the results
-    if (this->north_west == nullptr) {
+    if (this->children[0] == nullptr) {
         return results;
     }
 
-    // Get the results from the subtrees
-    std::unordered_set<T> north_west_results = this->north_west->query(bounds);
-    std::unordered_set<T> north_east_results = this->north_east->query(bounds);
-    std::unordered_set<T> south_west_results = this->south_west->query(bounds);
-    std::unordered_set<T> south_east_results = this->south_east->query(bounds);
-
-    // Insert the results from the subtrees into the results vector
-    results.insert(north_west_results.begin(), north_west_results.end());
-    results.insert(north_east_results.begin(), north_east_results.end());
-    results.insert(south_west_results.begin(), south_west_results.end());
-    results.insert(south_east_results.begin(), south_east_results.end());
+    // For all children, get the results
+    for (QuadTree<T>* child : this->children) {
+        std::unordered_set<T> child_results = child->query(bounds);
+        results.insert(child_results.begin(), child_results.end());
+    }
 
     return results;
 }
@@ -94,21 +87,15 @@ std::vector<std::pair<AxisAlignedBoundingBox, T>> QuadTree<T>::get_as_vector() {
     }
 
     // Check if we have subtrees, if not, return the results
-    if (this->north_west == nullptr) {
+    if (this->children[0] == nullptr) {
         return results;
     }
 
-    // Get the results from the subtrees
-    std::vector<std::pair<AxisAlignedBoundingBox, T>> north_west_results = this->north_west->get_as_vector();
-    std::vector<std::pair<AxisAlignedBoundingBox, T>> north_east_results = this->north_east->get_as_vector();
-    std::vector<std::pair<AxisAlignedBoundingBox, T>> south_west_results = this->south_west->get_as_vector();
-    std::vector<std::pair<AxisAlignedBoundingBox, T>> south_east_results = this->south_east->get_as_vector();
-
-    // Insert the results from the subtrees into the results vector
-    results.insert(results.end(), north_west_results.begin(), north_west_results.end());
-    results.insert(results.end(), north_east_results.begin(), north_east_results.end());
-    results.insert(results.end(), south_west_results.begin(), south_west_results.end());
-    results.insert(results.end(), south_east_results.begin(), south_east_results.end());
+    // For all children, get the results
+    for (QuadTree<T>* child : this->children) {
+        std::vector<std::pair<AxisAlignedBoundingBox, T>> child_results = child->get_as_vector();
+        results.insert(results.end(), child_results.begin(), child_results.end());
+    }
 
     return results;
 }
