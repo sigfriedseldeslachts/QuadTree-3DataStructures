@@ -20,10 +20,6 @@ void QuadTreeRenderer::drawSquareContour(const AxisAlignedBoundingBox &bounds, i
     drawSquareContour( (int) bounds.getX(), (int) bounds.getY(), (int) bounds.getHeight(), (int) bounds.getWidth(), r, g, b, a);
 }
 
-void QuadTreeRenderer::update() {
-    SDL_RenderPresent(renderer);
-}
-
 void QuadTreeRenderer::drawTree(QuadTree<int> *tree) {
     for (QuadTreeIterator<int> it = tree->begin(); it != tree->end(); ++it)
     {
@@ -39,6 +35,7 @@ void QuadTreeRenderer::drawTree(QuadTree<int> *tree) {
 
         // This draws the bounding box of the current tree
         drawSquareContour(it.tree().getBounds(), 0, 255, 0, 255);
+        //SDL_Delay(1000);
     }
 
     SDL_RenderPresent(renderer);

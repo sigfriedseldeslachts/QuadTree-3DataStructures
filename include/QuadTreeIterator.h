@@ -22,24 +22,16 @@ class QuadTreeIterator {
                 QuadTree<T>* parent = current->getParent();
 
                 while (parent != nullptr) {
-                    // Check if we are north west child
-                    bool is_north_west = parent->getNorthWest() == current;
-                    bool is_north_east = parent->getNorthEast() == current;
-                    bool is_south_west = parent->getSouthWest() == current;
-                    bool is_south_east = parent->getSouthEast() == current;
+                    int index = this->findCurrentChildIndex(); // Index of the current node in the parent's children vector
+                    std::vector<QuadTree< T>*> children = parent->getChildren();
 
-                    if (parent->getNorthWest() != nullptr && !is_north_west && !is_north_east && !is_south_west && !is_south_east) {
-                        current = parent->getNorthWest();
-                        return *this;
-                    } else if (parent->getNorthEast() != nullptr && !is_north_east && !is_south_west && !is_south_east) {
-                        current = parent->getNorthEast();
-                        return *this;
-                    } else if (parent->getSouthWest() != nullptr && !is_south_west && !is_south_east) {
-                        current = parent->getSouthWest();
-                        return *this;
-                    } else if (parent->getSouthEast() != nullptr && !is_south_east) {
-                        current = parent->getSouthEast();
-                        return *this;
+                    // In a for-loop grab the next child
+                    // We start at index + 1, if we are at north-east (index 1) we want to start at south-west (index 2)
+                    for (int i = index + 1; i < children.size(); i++) {
+                        if (children[i] != nullptr) {
+                            current = children[i];
+                            return *this;
+                        }
                     }
 
                     current = parent;
@@ -50,6 +42,24 @@ class QuadTreeIterator {
             }
 
             return *this;
+        }
+
+        /**
+         * Find the current index of the child in the parent
+         * Eg if we are the north west child, return 0, if we are the north east child, return 1, etc
+         * @return The index of the child in the parent
+         */
+        int findCurrentChildIndex() {
+            QuadTree<T>* parent = current->getParent();
+            std::vector<QuadTree< T>*> children = parent->getChildren();
+
+            for (int i = 0; i < children.size(); i++) {
+                if (children[i] == current) {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         bool operator==(const QuadTreeIterator<T>& rhs) {

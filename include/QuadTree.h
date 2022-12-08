@@ -15,7 +15,7 @@ class QuadTree {
         unsigned int region_capacity = 0;
         std::vector<std::pair<AxisAlignedBoundingBox, T>> points;
 
-        QuadTree<T>* children[4] = {nullptr, nullptr, nullptr, nullptr};
+        std::vector<QuadTree<T> *> children = {nullptr, nullptr, nullptr, nullptr};
         QuadTree* parent = nullptr;
 
     public:
@@ -36,6 +36,9 @@ class QuadTree {
         }
         [[nodiscard]] const std::vector<std::pair<AxisAlignedBoundingBox, T>> &getPoints() const {
             return points;
+        }
+        [[nodiscard]] const std::vector<QuadTree<T> *> &getChildren() const {
+            return children;
         }
         [[nodiscard]] QuadTree *getParent() const {
             return parent;
