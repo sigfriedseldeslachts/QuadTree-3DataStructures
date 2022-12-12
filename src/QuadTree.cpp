@@ -12,8 +12,6 @@ void QuadTree<T>::insert(const AxisAlignedBoundingBox &bounds, const T &metadata
 
     // If there is space in the current tree, we can just insert the AABB
     if (this->points.size() < this->region_capacity && this->children[0] == nullptr) {
-        // Print the metadata
-        std::cout << "Inserting " << (int) metadata << std::endl;
         this->points.push_back(std::make_pair(bounds, metadata));
         return;
     }

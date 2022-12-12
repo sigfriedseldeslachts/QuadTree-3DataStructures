@@ -43,18 +43,6 @@ class QuadTree {
         [[nodiscard]] QuadTree *getParent() const {
             return parent;
         }
-        [[nodiscard]] QuadTree *getNorthWest() const {
-            return children[0];
-        }
-        [[nodiscard]] QuadTree *getNorthEast() const {
-            return children[1];
-        }
-        [[nodiscard]] QuadTree *getSouthWest() const {
-            return children[2];
-        }
-        [[nodiscard]] QuadTree *getSouthEast() const {
-            return children[3];
-        }
 };
 
 template class QuadTree<int>;

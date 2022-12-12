@@ -1,5 +1,4 @@
-#ifndef PROJECT_QUADTREE_AXISALIGNEDBOUNDINGBOX_H
-#define PROJECT_QUADTREE_AXISALIGNEDBOUNDINGBOX_H
+#pragma once
 
 // This class represents an axis-aligned bounding box
 // In a 2D problem, this is simply a rectangle whose sides are
@@ -26,6 +25,3 @@ class AxisAlignedBoundingBox {
         [[nodiscard]] unsigned int getWidth() const;
         [[nodiscard]] unsigned int getHeight() const;
 };
-
-
-#endif //PROJECT_QUADTREE_AXISALIGNEDBOUNDINGBOX_H

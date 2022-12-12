@@ -9,9 +9,9 @@
 #define WIDTH 800
 #define GENERATE_POINTS 20
 
-int main() {
+int main(int argc, char * argv[]) {
     // Create a new render window
-    QuadTreeRenderer window(HEIGHT, WIDTH);
+    //QuadTreeRenderer window(HEIGHT, WIDTH);
 
     // Create a new AABB tree with a capacity of 4
     QuadTree<int> root_tree(AxisAlignedBoundingBox(2, 2, HEIGHT - 4, WIDTH - 4), 1);
@@ -28,19 +28,21 @@ int main() {
     std::cout << "Amount of AABBs: " << root_tree.get_as_vector().size() << std::endl;
 
     // Draw the root tree
-    window.drawTree(&root_tree);
+    //window.drawTree(&root_tree);
 
     // Test if we can query
     AxisAlignedBoundingBox aabb(550, 550, 200, 200);
     std::cout << "Amount in area is: " << root_tree.query(aabb).size() << std::endl;
-    window.drawSquareContour(aabb, 0, 0, 255, 255);
+    //window.drawSquareContour(aabb, 0, 0, 255, 255);
 
     // Update the renderer
-    window.updateRenderer();
+    /*window.updateRenderer();
 
     SDL_Event event;
     while (event.type != SDL_QUIT){
         SDL_Delay(10);  // setting some Delay
         SDL_PollEvent(&event);  // Catching the poll event.
-    }
+    }*/
+
+    return 0;
 }
