@@ -30,7 +30,13 @@ int main() {
     // Draw the root tree
     window.drawTree(&root_tree);
 
-    std::cout << "Amount in area is: " << root_tree.query(AxisAlignedBoundingBox(550, 550, 100, 100)).size() << std::endl;
+    // Test if we can query
+    AxisAlignedBoundingBox aabb(550, 550, 200, 200);
+    std::cout << "Amount in area is: " << root_tree.query(aabb).size() << std::endl;
+    window.drawSquareContour(aabb, 0, 0, 255, 255);
+
+    // Update the renderer
+    window.updateRenderer();
 
     SDL_Event event;
     while (event.type != SDL_QUIT){

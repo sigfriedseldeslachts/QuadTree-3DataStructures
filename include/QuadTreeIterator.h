@@ -10,47 +10,49 @@ class QuadTreeIterator {
         std::vector<std::pair<AxisAlignedBoundingBox, T>> operator*() const { return current->getPoints(); }
 
         const QuadTreeIterator<T>& operator++() {
-            if (current->getNorthWest() != nullptr) {
-                current = current->getNorthWest();
-            } else if (current->getNorthEast() != nullptr) {
-                current = current->getNorthEast();
-            } else if (current->getSouthWest() != nullptr) {
-                current = current->getSouthWest();
-            } else if (current->getSouthEast() != nullptr) {
-                current = current->getSouthEast();
-            } else {
-                QuadTree<T>* parent = current->getParent();
+            // We set the initial value to those of the current node, this way we can reuse the while loop
+            // An additional if statement is needed to not overwrite the current node, otherwise we would skip the first node and cause a segfault (accessing a nullptr)
+            QuadTree<T>* parent = current;
+            std::vector<QuadTree<T>*> children = current->getChildren();
+            int index = this->findCurrentChildIndex(current);
 
-                while (parent != nullptr) {
-                    int index = this->findCurrentChildIndex(); // Index of the current node in the parent's children vector
-                    std::vector<QuadTree< T>*> children = parent->getChildren();
-
-                    // In a for-loop grab the next child
-                    // We start at index + 1, if we are at north-east (index 1) we want to start at south-west (index 2)
-                    for (int i = index + 1; i < children.size(); i++) {
-                        if (children[i] != nullptr) {
-                            current = children[i];
-                            return *this;
-                        }
-                    }
-
-                    current = parent;
-                    parent = parent->getParent();
+            // If the parent is a null pointer we are at the root node
+            while (parent != nullptr) {
+                // If children and index are not set, otherwise the loop breaks, can also add a check if parent is null at the end of the while
+                if (children.empty() || index == -2) { // -2 because -1 is used for the index of the current node
+                    children = parent->getChildren();
+                    index = this->findCurrentChildIndex();
                 }
 
-                current = nullptr;
+                // In a for-loop grab the next child
+                // We start at index + 1, if we are at north-east (index 1) we want to start at south-west (index 2)
+                for (int i = index + 1; i < children.size(); i++) {
+                    if (children[i] != nullptr) {
+                        current = children[i];
+                        return *this;
+                    }
+                }
+
+                current = parent;
+                parent = parent->getParent();
+                // Reset the index and children so the while loop can find the next node
+                children = std::vector<QuadTree<T>*>();
+                index = -2;
             }
 
+            current = nullptr;
             return *this;
         }
 
         /**
          * Find the current index of the child in the parent
          * Eg if we are the north west child, return 0, if we are the north east child, return 1, etc
-         * @return The index of the child in the parent
+         * @return The index of the child in the parent, -1 if not found
          */
-        int findCurrentChildIndex() {
-            QuadTree<T>* parent = current->getParent();
+        int findCurrentChildIndex(QuadTree<T>* parent = nullptr) {
+            if (parent == nullptr) {
+                parent = current->getParent();
+            }
             std::vector<QuadTree< T>*> children = parent->getChildren();
 
             for (int i = 0; i < children.size(); i++) {
@@ -59,7 +61,7 @@ class QuadTreeIterator {
                 }
             }
 
-            return -1;
+            return -1; // Item not found in current's parent
         }
 
         bool operator==(const QuadTreeIterator<T>& rhs) {

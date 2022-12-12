@@ -26,8 +26,10 @@ class QuadTreeRenderer {
 
         void drawSquareContour(int x, int y, int height, int width, int r = 255, int g = 255, int b = 255, int a = 255);
         void drawSquareContour(const AxisAlignedBoundingBox& bounds, int r = 255, int g = 255, int b = 255, int a = 255);
-
         void drawTree(QuadTree<int> *tree);
+        void updateRenderer() {
+            SDL_RenderPresent(renderer);
+        }
 };
 
 

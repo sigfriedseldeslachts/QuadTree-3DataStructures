@@ -35,8 +35,5 @@ void QuadTreeRenderer::drawTree(QuadTree<int> *tree) {
 
         // This draws the bounding box of the current tree
         drawSquareContour(it.tree().getBounds(), 0, 255, 0, 255);
-        //SDL_Delay(1000);
     }
-
-    SDL_RenderPresent(renderer);
 }
