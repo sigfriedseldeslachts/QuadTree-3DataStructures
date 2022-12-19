@@ -61,3 +61,18 @@ TEST_CASE("Children are inserted correctly with a higher region capacity than 1"
         REQUIRE(root.getChildren()[i]->getPoints().size() == 1);
     }
 }
+
+TEST_CASE("Test time complexity") {
+    // Insert a lot of random points
+    QuadTree<int> root(AxisAlignedBoundingBox(0, 0, 1000, 1000), 1);
+
+    for (int i = 0; i < 1000; i++) {
+        root.insert(AxisAlignedBoundingBox(rand() % 1000, rand() % 1000, 10, 10), i);
+    }
+
+    // Query a lot of random points
+    for (int i = 0; i < 1000; i++) {
+        root.query(AxisAlignedBoundingBox(rand() % 1000, rand() % 1000, 10, 10));
+    }
+    // Remove a lot of random points
+}

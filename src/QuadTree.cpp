@@ -11,6 +11,7 @@ void QuadTree<T>::insert(const AxisAlignedBoundingBox &bounds, const T &metadata
     }
 
     // If there is space in the current tree, we can just insert the AABB
+    // When this is true, we insert and stop here. We don't need to insert it in other children since this will get queried anyway
     if (this->points.size() < this->region_capacity && this->children[0] == nullptr) {
         this->points.push_back(std::make_pair(bounds, metadata));
         return;
@@ -22,6 +23,7 @@ void QuadTree<T>::insert(const AxisAlignedBoundingBox &bounds, const T &metadata
     }
 
     // For all the children, we should insert the AABB
+    // It needs to be inserted in ALL the children because if it is inserted in only one then it might not be shown when querying it
     for (QuadTree<T>* child : this->children) {
         child->insert(bounds, metadata);
     }
@@ -44,9 +46,9 @@ void QuadTree<T>::subdivide() {
 }
 
 template<typename T>
-std::unordered_set<T> QuadTree<T>::query(const AxisAlignedBoundingBox &bounds) {
+std::unordered_set<std::pair<AxisAlignedBoundingBox, T>> QuadTree<T>::query(const AxisAlignedBoundingBox &bounds) {
     // Createa a vector to store the results
-    std::unordered_set<T> results;
+    std::unordered_set<std::pair<AxisAlignedBoundingBox, T>> results = {};
 
     // Check if the AABB is actually inside the bounds of the current tree
     if (!collides(this->bounds, bounds)) {
@@ -56,7 +58,7 @@ std::unordered_set<T> QuadTree<T>::query(const AxisAlignedBoundingBox &bounds) {
     // From the current points vector get all the metadata that is inside the given AABB
     for (std::pair point : this->points) {
         if (collides(point.first, bounds)) {
-            results.insert(point.second);
+            results.insert(point);
         }
     }
 
@@ -67,7 +69,7 @@ std::unordered_set<T> QuadTree<T>::query(const AxisAlignedBoundingBox &bounds) {
 
     // For all children, get the results
     for (QuadTree<T>* child : this->children) {
-        std::unordered_set<T> child_results = child->query(bounds);
+        auto child_results = child->query(bounds);
         results.insert(child_results.begin(), child_results.end());
     }
 

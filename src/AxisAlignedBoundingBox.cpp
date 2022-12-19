@@ -18,6 +18,13 @@ bool collides(const AxisAlignedBoundingBox &a, const AxisAlignedBoundingBox &b) 
            a.y + a.height > b.y;
 }
 
+bool AxisAlignedBoundingBox::operator==(const AxisAlignedBoundingBox &other) const {
+    return x == other.x &&
+           y == other.y &&
+           width == other.width &&
+           height == other.height;
+}
+
 unsigned int AxisAlignedBoundingBox::getX() const {
     return x;
 }

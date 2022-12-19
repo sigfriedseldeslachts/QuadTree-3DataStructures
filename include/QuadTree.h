@@ -3,7 +3,9 @@
 #include <unordered_set>
 #include <vector>
 #include <map>
+
 #include "AxisAlignedBoundingBox.h"
+#include "../include/PairHash.h"
 
 template <typename T>
 class QuadTreeIterator;
@@ -23,7 +25,7 @@ class QuadTree {
 
         void insert(const AxisAlignedBoundingBox& bounds, const T& metadata);
         void subdivide();
-        std::unordered_set<T> query(const AxisAlignedBoundingBox& bounds);
+        std::unordered_set<std::pair<AxisAlignedBoundingBox, T>> query(const AxisAlignedBoundingBox& bounds);
 
         // Get all points as a vector
         std::vector<std::pair<AxisAlignedBoundingBox, T>> get_as_vector();

@@ -3,10 +3,10 @@ project(Project_QuadTree)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Project_QuadTree src/main.cpp src/AxisAlignedBoundingBox.cpp include/AxisAlignedBoundingBox.h src/QuadTree.cpp include/QuadTree.h src/QuadTreeRenderer.cpp include/QuadTreeRenderer.h include/QuadTreeIterator.h)
+add_executable(Project_QuadTree src/main.cpp src/AxisAlignedBoundingBox.cpp include/AxisAlignedBoundingBox.h src/QuadTree.cpp include/QuadTree.h src/QuadTreeRenderer.cpp include/QuadTreeRenderer.h include/QuadTreeIterator.h include/PairHash.h)
 
 # Create separate target for tests
-add_executable(Project_QuadTree_tests lib/catch.hpp src/AxisAlignedBoundingBox.cpp include/AxisAlignedBoundingBox.h src/QuadTree.cpp include/QuadTree.h include/QuadTreeIterator.h tests/Tests.cpp)
+add_executable(Project_QuadTree_tests lib/catch.hpp src/AxisAlignedBoundingBox.cpp include/AxisAlignedBoundingBox.h src/QuadTree.cpp include/QuadTree.h include/QuadTreeIterator.h tests/Tests.cpp include/PairHash.h)
 
 # Include SDL2
 INCLUDE(FindPkgConfig)

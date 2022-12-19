@@ -11,6 +11,7 @@ class QuadTreeIterator {
 
         const QuadTreeIterator<T>& operator++() {
             // We set the initial value to those of the current node, this way we can reuse the while loop
+            // It always checks the current node first
             // An additional if statement is needed to not overwrite the current node, otherwise we would skip the first node and cause a segfault (accessing a nullptr)
             QuadTree<T>* parent = current;
             std::vector<QuadTree<T>*> children = current->getChildren();

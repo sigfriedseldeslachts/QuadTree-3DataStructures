@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cmath>
+#include <unordered_set>
+
 // This class represents an axis-aligned bounding box
 // In a 2D problem, this is simply a rectangle whose sides are
 // parallel to the X- and Y-axis
@@ -19,6 +22,9 @@ class AxisAlignedBoundingBox {
          * @return True if they collide, false otherwise
          */
         friend bool collides(const AxisAlignedBoundingBox &a, const AxisAlignedBoundingBox &b);
+
+        // Create an operator==
+        bool operator==(const AxisAlignedBoundingBox& other) const;
 
         [[nodiscard]] unsigned int getX() const;
         [[nodiscard]] unsigned int getY() const;
