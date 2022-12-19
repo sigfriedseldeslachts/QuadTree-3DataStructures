@@ -27,7 +27,7 @@ class QuadTreeIterator {
 
                 // In a for-loop grab the next child
                 // We start at index + 1, if we are at north-east (index 1) we want to start at south-west (index 2)
-                for (int i = index + 1; i < children.size(); i++) {
+                for (unsigned long i = index + 1; i < children.size(); i++) {
                     if (children[i] != nullptr) {
                         current = children[i];
                         return *this;
@@ -56,9 +56,9 @@ class QuadTreeIterator {
             }
             std::vector<QuadTree< T>*> children = parent->getChildren();
 
-            for (int i = 0; i < children.size(); i++) {
+            for (unsigned long i = 0; i < children.size(); i++) {
                 if (children[i] == current) {
-                    return i;
+                    return (int) i;
                 }
             }
 

@@ -46,18 +46,18 @@ void QuadTree<T>::subdivide() {
 }
 
 template<typename T>
-std::unordered_set<std::pair<AxisAlignedBoundingBox, T>> QuadTree<T>::query(const AxisAlignedBoundingBox &bounds) {
-    // Createa a vector to store the results
+std::unordered_set<std::pair<AxisAlignedBoundingBox, T>> QuadTree<T>::query(const AxisAlignedBoundingBox &requested_bounds) {
+    // Create a vector to store the results
     std::unordered_set<std::pair<AxisAlignedBoundingBox, T>> results = {};
 
-    // Check if the AABB is actually inside the bounds of the current tree
-    if (!collides(this->bounds, bounds)) {
+    // Check if the AABB is actually inside the requested_bounds of the current tree
+    if (!collides(this->bounds, requested_bounds)) {
         return results;
     }
 
     // From the current points vector get all the metadata that is inside the given AABB
     for (std::pair point : this->points) {
-        if (collides(point.first, bounds)) {
+        if (collides(point.first, requested_bounds)) {
             results.insert(point);
         }
     }
@@ -69,7 +69,7 @@ std::unordered_set<std::pair<AxisAlignedBoundingBox, T>> QuadTree<T>::query(cons
 
     // For all children, get the results
     for (QuadTree<T>* child : this->children) {
-        auto child_results = child->query(bounds);
+        auto child_results = child->query(requested_bounds);
         results.insert(child_results.begin(), child_results.end());
     }
 

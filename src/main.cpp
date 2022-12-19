@@ -13,7 +13,7 @@
 
 void measureTime();
 
-int main(int argc, char * argv[]) {
+int main() {
     // Create a new render window
     QuadTreeRenderer window(HEIGHT, WIDTH);
 

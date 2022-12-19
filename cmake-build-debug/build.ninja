@@ -51,28 +51,28 @@ build cmake_object_order_depends_target_Project_QuadTree: phony || CMakeFiles/Pr
 
 build CMakeFiles/Project_QuadTree.dir/src/main.cpp.o: CXX_COMPILER__Project_QuadTree_Debug /home/sigfried/Nextcloud/School/UAntwerpen/Schakel_Fase1/5DataStructures/Project_QuadTree/src/main.cpp || cmake_object_order_depends_target_Project_QuadTree
   DEP_FILE = CMakeFiles/Project_QuadTree.dir/src/main.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always
+  FLAGS = -g -fdiagnostics-color=always -Wall -Wextra -Wpedantic -Werror
   INCLUDES = -I/usr/include/SDL2
   OBJECT_DIR = CMakeFiles/Project_QuadTree.dir
   OBJECT_FILE_DIR = CMakeFiles/Project_QuadTree.dir/src
 
 build CMakeFiles/Project_QuadTree.dir/src/AxisAlignedBoundingBox.cpp.o: CXX_COMPILER__Project_QuadTree_Debug /home/sigfried/Nextcloud/School/UAntwerpen/Schakel_Fase1/5DataStructures/Project_QuadTree/src/AxisAlignedBoundingBox.cpp || cmake_object_order_depends_target_Project_QuadTree
   DEP_FILE = CMakeFiles/Project_QuadTree.dir/src/AxisAlignedBoundingBox.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always
+  FLAGS = -g -fdiagnostics-color=always -Wall -Wextra -Wpedantic -Werror
   INCLUDES = -I/usr/include/SDL2
   OBJECT_DIR = CMakeFiles/Project_QuadTree.dir
   OBJECT_FILE_DIR = CMakeFiles/Project_QuadTree.dir/src
 
 build CMakeFiles/Project_QuadTree.dir/src/QuadTree.cpp.o: CXX_COMPILER__Project_QuadTree_Debug /home/sigfried/Nextcloud/School/UAntwerpen/Schakel_Fase1/5DataStructures/Project_QuadTree/src/QuadTree.cpp || cmake_object_order_depends_target_Project_QuadTree
   DEP_FILE = CMakeFiles/Project_QuadTree.dir/src/QuadTree.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always
+  FLAGS = -g -fdiagnostics-color=always -Wall -Wextra -Wpedantic -Werror
   INCLUDES = -I/usr/include/SDL2
   OBJECT_DIR = CMakeFiles/Project_QuadTree.dir
   OBJECT_FILE_DIR = CMakeFiles/Project_QuadTree.dir/src
 
 build CMakeFiles/Project_QuadTree.dir/src/QuadTreeRenderer.cpp.o: CXX_COMPILER__Project_QuadTree_Debug /home/sigfried/Nextcloud/School/UAntwerpen/Schakel_Fase1/5DataStructures/Project_QuadTree/src/QuadTreeRenderer.cpp || cmake_object_order_depends_target_Project_QuadTree
   DEP_FILE = CMakeFiles/Project_QuadTree.dir/src/QuadTreeRenderer.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always
+  FLAGS = -g -fdiagnostics-color=always -Wall -Wextra -Wpedantic -Werror
   INCLUDES = -I/usr/include/SDL2
   OBJECT_DIR = CMakeFiles/Project_QuadTree.dir
   OBJECT_FILE_DIR = CMakeFiles/Project_QuadTree.dir/src

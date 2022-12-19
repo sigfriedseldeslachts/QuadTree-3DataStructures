@@ -13,7 +13,7 @@ TEST_CASE("AABBs intersect", "[collides]") {
 
 TEST_CASE("AABBs don't intersect", "[collides]") {
     AxisAlignedBoundingBox a(0, 0, 10, 10);
-    AxisAlignedBoundingBox b(20, 20, 10, 10);
+    AxisAlignedBoundingBox b(11, 11, 10, 10);
 
     REQUIRE_FALSE(collides(a, b));
 }
@@ -60,19 +60,4 @@ TEST_CASE("Children are inserted correctly with a higher region capacity than 1"
     for (int i = 3; i > 1; i--) {
         REQUIRE(root.getChildren()[i]->getPoints().size() == 1);
     }
-}
-
-TEST_CASE("Test time complexity") {
-    // Insert a lot of random points
-    QuadTree<int> root(AxisAlignedBoundingBox(0, 0, 1000, 1000), 1);
-
-    for (int i = 0; i < 1000; i++) {
-        root.insert(AxisAlignedBoundingBox(rand() % 1000, rand() % 1000, 10, 10), i);
-    }
-
-    // Query a lot of random points
-    for (int i = 0; i < 1000; i++) {
-        root.query(AxisAlignedBoundingBox(rand() % 1000, rand() % 1000, 10, 10));
-    }
-    // Remove a lot of random points
 }

@@ -14,3 +14,9 @@ PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
 INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS})
 
 target_link_libraries(Project_QuadTree ${SDL2_LIBRARIES})
+
+target_compile_options(
+        Project_QuadTree
+        PUBLIC
+        -Wall -Wextra -Wpedantic -Werror
+)
