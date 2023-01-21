@@ -3,17 +3,17 @@
 #include "../include/QuadTreeIterator.h"
 
 template<typename T>
-void QuadTree<T>::insert(const AxisAlignedBoundingBox &bounds, const T &metadata) {
-    // We should check if the given bounds collides with the bounds of this node
+void QuadTree<T>::insert(const AxisAlignedBoundingBox &boundingBox, const T &metadata) {
+    // We should check if the given boundingBox collides with the boundingBox of this node
     // If it does, continue on otherwise we stop here because subregions will also not collide
-    if (!collides(this->bounds, bounds)) {
+    if (!collides(this->bounds, boundingBox)) {
         return;
     }
 
     // If there is space in the current tree, we can just insert the AABB
     // When this is true, we insert and stop here. We don't need to insert it in other children since this will get queried anyway
     if (this->points.size() < this->region_capacity && this->children[0] == nullptr) {
-        this->points.push_back(std::make_pair(bounds, metadata));
+        this->points.push_back(std::make_pair(boundingBox, metadata));
         return;
     }
 
@@ -25,7 +25,7 @@ void QuadTree<T>::insert(const AxisAlignedBoundingBox &bounds, const T &metadata
     // For all the children, we should insert the AABB
     // It needs to be inserted in ALL the children because if it is inserted in only one then it might not be shown when querying it
     for (QuadTree<T>* child : this->children) {
-        child->insert(bounds, metadata);
+        child->insert(boundingBox, metadata);
     }
 }
 

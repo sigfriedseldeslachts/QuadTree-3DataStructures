@@ -1,7 +1,7 @@
 #include "../include/QuadTreeRenderer.h"
 #include <iostream>
 
-QuadTreeRenderer::QuadTreeRenderer(int height, int width) : height(height), width(width) {
+QuadTreeRenderer::QuadTreeRenderer(int height, int width) {
     SDL_Init(SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(width, height, 0, &window, &renderer);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);

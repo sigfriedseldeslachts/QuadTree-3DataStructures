@@ -9,13 +9,17 @@ AxisAlignedBoundingBox::AxisAlignedBoundingBox(unsigned int x, unsigned int y, u
 }
 
 bool collides(const AxisAlignedBoundingBox &a, const AxisAlignedBoundingBox &b) {
-    // Check if B collides with A, the top left corner is 0,0
-    // A is the bounding box of the object
-    // B is the bounding box of the node
-    return a.x < b.x + b.width &&
-           a.x + a.width > b.x &&
-           a.y < b.y + b.height &&
-           a.y + a.height > b.y;
+    unsigned int axMin = a.getX();
+    unsigned int axMax = a.getX() + a.getWidth();
+    unsigned int ayMin = a.getY();
+    unsigned int ayMax = a.getY() + a.getHeight();
+
+    unsigned int bxMin = b.getX();
+    unsigned int bxMax = b.getX() + b.getWidth();
+    unsigned int byMin = b.getY();
+    unsigned int byMax = b.getY() + b.getHeight();
+
+    return (axMin < bxMax && bxMin < axMax && ayMin < byMax && byMin < ayMax);
 }
 
 bool AxisAlignedBoundingBox::operator==(const AxisAlignedBoundingBox &other) const {

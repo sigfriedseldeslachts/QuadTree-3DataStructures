@@ -18,11 +18,11 @@ TEST_CASE("AABBs don't intersect", "[collides]") {
     REQUIRE_FALSE(collides(a, b));
 }
 
-TEST_CASE("AABBs intersect on the edge", "[collides]") {
+TEST_CASE("AABBs don't intersect on the edge", "[collides]") { // If we did, it would cause issues with the bounding boxes
     AxisAlignedBoundingBox a(0, 0, 10, 10);
     AxisAlignedBoundingBox b(10, 10, 10, 10);
 
-    REQUIRE(collides(a, b));
+    REQUIRE_FALSE(collides(a, b));
 }
 
 TEST_CASE("Children are inserted correctly") {

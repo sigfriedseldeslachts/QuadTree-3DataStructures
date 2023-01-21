@@ -11,7 +11,6 @@
 
 class QuadTreeRenderer {
     private:
-        int height, width;
         SDL_Renderer *renderer = nullptr;
         SDL_Window *window = nullptr;
 

@@ -23,7 +23,7 @@ class QuadTree {
     public:
         QuadTree(const AxisAlignedBoundingBox& bounds, unsigned int region_capacity, QuadTree* parent = nullptr) : bounds(bounds), region_capacity(region_capacity), parent(parent) {}
 
-        void insert(const AxisAlignedBoundingBox& bounds, const T& metadata);
+        void insert(const AxisAlignedBoundingBox& boundingBox, const T& metadata);
         void subdivide();
         std::unordered_set<std::pair<AxisAlignedBoundingBox, T>> query(const AxisAlignedBoundingBox& requested_bounds);
 
