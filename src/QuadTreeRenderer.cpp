@@ -30,9 +30,6 @@ void QuadTreeRenderer::drawTree(QuadTree<int> *tree) {
             drawSquareContour(point.first, 255, 255, 255, 255);
         }
 
-        // Prints the amount of points in the current node
-        std::cout << "Amount of points in current node: " << points.size() << std::endl;
-
         // This draws the bounding box of the current tree
         drawSquareContour(it.tree().getBounds(), 0, 255, 0, 255);
     }

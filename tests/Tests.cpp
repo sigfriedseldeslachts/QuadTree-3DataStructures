@@ -61,3 +61,21 @@ TEST_CASE("Children are inserted correctly with a higher region capacity than 1"
         REQUIRE(root.getChildren()[i]->getPoints().size() == 1);
     }
 }
+
+TEST_CASE("Query returns the correct amount items") {
+    QuadTree<int> root(AxisAlignedBoundingBox(0, 0, 1000, 1000), 1);
+
+    root.insert(AxisAlignedBoundingBox(100, 100, 100, 100), 1);
+    root.insert(AxisAlignedBoundingBox(350, 350, 100, 100), 2);
+    root.insert(AxisAlignedBoundingBox(200, 200, 100, 100), 3);
+    root.insert(AxisAlignedBoundingBox(700, 700, 100, 100), 4);
+    root.insert(AxisAlignedBoundingBox(300, 300, 100, 100), 5);
+    root.insert(AxisAlignedBoundingBox(600, 600, 20, 20), 6);
+
+    // Get the items in the requested bounds
+    AxisAlignedBoundingBox bounds(550, 550, 200, 200);
+    auto results = root.query(bounds);
+
+    // The number of results should be the number of items in the requested bounds
+    REQUIRE(results.size() == 2);
+}

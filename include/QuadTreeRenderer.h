@@ -29,6 +29,11 @@ class QuadTreeRenderer {
         void updateRenderer() {
             SDL_RenderPresent(renderer);
         }
+        void clearRenderer() {
+            // Clear the window and make it all black
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+            SDL_RenderClear(renderer);
+        }
 };
 
 
