@@ -14,4 +14,6 @@ The main program (`main.cpp`) is a simple example of how to use the Quad Tree. I
 A `measureTime()` function is also present, it runs the algorithm a few thousand times and puts the results in a csv file, this can then be used to plot the time complexity of the algorithm. 
 
 ## Notes
+
+#### Main program with random point generators
 There are two random point generators in the main function. One is to make sure that there are always points inside the query region. The other is to populate the other area. Sometimes the last one puts points inside the query region, therefore the program can state it has inserted 3 points but there are actually 4 points in the query region.

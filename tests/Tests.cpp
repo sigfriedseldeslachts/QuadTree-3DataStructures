@@ -79,3 +79,15 @@ TEST_CASE("Query returns the correct amount items") {
     // The number of results should be the number of items in the requested bounds
     REQUIRE(results.size() == 2);
 }
+
+TEST_CASE("Empty query region returns no results") {
+    QuadTree<int> root(AxisAlignedBoundingBox(0, 0, 1000, 1000), 1);
+
+    root.insert(AxisAlignedBoundingBox(100, 100, 100, 100), 1);
+    root.insert(AxisAlignedBoundingBox(350, 350, 100, 100), 2);
+
+    AxisAlignedBoundingBox bounds(550, 550, 200, 200);
+    auto results = root.query(bounds);
+
+    REQUIRE(results.empty());
+}
